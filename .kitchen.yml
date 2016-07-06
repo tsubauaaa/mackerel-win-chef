@@ -1,0 +1,23 @@
+---
+driver:
+  name: vagrant
+  network:
+    - ["forwarded_port", {guest: 80, host: 10080}]
+  synced_folders:
+    - ["./", "/vagrant"]
+
+provisioner:
+  name: chef_solo
+
+platforms:
+  - name: win2012r2
+    driver_config:
+      communicator: winrm
+    transport:
+      name: winrm
+
+suites:
+  - name: default
+    run_list:
+      - recipe[mackerel-win::default]
+    attributes:
